@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.etelcom.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_new_file"
+        android:name="com.example.etelcom.ui.new_file.NewFileFragment"
+        android:label="@string/menu_new_file"
+        tools:layout="@layout/fragment_new_file" />
 
 </navigation>

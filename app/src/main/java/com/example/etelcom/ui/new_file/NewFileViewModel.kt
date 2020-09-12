@@ -1,13 +1,12 @@
-package com.example.etelcom.ui.gallery
+package com.example.etelcom.ui.new_file
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
-
+class NewFileViewModel : ViewModel() {
     private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+        value = "Client"
     }
     val text: LiveData<String> = _text
 }
