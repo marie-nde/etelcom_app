@@ -6,20 +6,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/durationTime"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:ems="10"
+        android:hint="Durée d'intervention"
+        android:inputType="time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_duration" />
+
+    <TextView
+        android:id="@+id/text_duration"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Durée d'intervention"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beginHour" />
+
     <Button
-        android:id="@+id/interventionBtn"
-        android:layout_width="0dp"
+        android:id="@+id/interventionBtnEnd"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Commencer l'intervention"
+        android:text="Terminer l'intervention"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/interventionBtnBeg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.014" />
+
+    <EditText
+        android:id="@+id/endHour"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:ems="10"
+        android:hint="Heure de fin"
+        android:inputType="time"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/beginHour"
+        app:layout_constraintTop_toBottomOf="@+id/text_beginning" />
+
+    <TextView
+        android:id="@+id/text_end"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="8dp"
+        android:text="Fin d'intervention"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/text_beginning"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <Button
+        android:id="@+id/interventionBtnBeg"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Commencer l'intervention"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.014" />
@@ -80,7 +149,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/interventionBtn"
+        app:layout_constraintTop_toBottomOf="@+id/interventionBtnBeg"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
@@ -110,17 +179,24 @@
 
     <EditText
         android:id="@+id/beginHour"
-        android:layout_width="0dp"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
         android:ems="10"
         android:hint="Heure de début"
         android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_beginning" />
+
+    <ImageButton
+        android:id="@+id/durationAction"
+        android:layout_width="51dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintStart_toEndOf="@+id/durationTime"
+        app:layout_constraintTop_toBottomOf="@+id/text_duration"
+        app:srcCompat="@drawable/ic_clock" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

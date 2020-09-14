@@ -2,22 +2,19 @@ package com.example.etelcom.ui.new_file
 
 import android.app.*
 import android.app.DatePickerDialog.OnDateSetListener
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.RemoteViews
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import com.example.etelcom.MainActivity
 import com.example.etelcom.R
+import org.w3c.dom.Text
+import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,14 +29,26 @@ class NewFileFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_new_file, container, false)
 
-        val interventionBtn: Button = root.findViewById(R.id.interventionBtn)
+        // Display the current time in "beginning of the intervention"
+        val interventionBtnBeg: Button = root.findViewById(R.id.interventionBtnBeg)
         val beginHour: TextView = root.findViewById(R.id.beginHour)
-        interventionBtn.setOnClickListener {
+        interventionBtnBeg.setOnClickListener {
             val dateFormat: DateFormat = SimpleDateFormat("HH:mm")
             val date = Date()
             val currentHour = dateFormat.format(date)
             val hourFormat: String = currentHour.replace(":", "h")
             beginHour.text = "$hourFormat"
+        }
+
+        // Display the current time in "end of the intervention"
+        val interventionBtnEnd: Button = root.findViewById(R.id.interventionBtnEnd)
+        val endHour: TextView = root.findViewById(R.id.endHour)
+        interventionBtnEnd.setOnClickListener {
+            val dateFormat: DateFormat = SimpleDateFormat("HH:mm")
+            val date = Date()
+            val currentHour = dateFormat.format(date)
+            val hourFormat: String = currentHour.replace(":", "h")
+            endHour.text = "$hourFormat"
         }
 
         // Get current date to display it by default
@@ -69,6 +78,55 @@ class NewFileFragment : Fragment() {
             )
             datePickerDialog.show()
         }
+
+        // Fill duration time
+        val durationAction: AppCompatImageButton = root.findViewById(R.id.durationAction)
+        durationAction.setOnClickListener {
+            val editBegin: TextView = root.findViewById(R.id.beginHour)
+            val editEnd: TextView = root.findViewById(R.id.endHour)
+            d("marie", "$editBegin et $editEnd")
+            if (editBegin.text.toString().isEmpty() || editEnd.text.toString().isEmpty()) {
+                val errorToast = Toast.makeText(requireActivity(),"Calcul impossible", Toast.LENGTH_LONG)
+                errorToast.show();
+            }
+            else {
+                val beginHour: String = editBegin.text.substring(0, 2)
+                val beginMinute: String = editBegin.text.substring(3, 5)
+                val endHour: String = editEnd.text.substring(0, 2)
+                val endMinute: String = editEnd.text.substring(3, 5)
+
+                val stop = Time(beginHour.toInt(), beginMinute.toInt(), 0)
+                val start = Time(endHour.toInt(), endMinute.toInt(), 0)
+                val diff: Time
+
+                diff = difference(start, stop)
+                val diffHours = String.format("%02d", diff.hours)
+                val diffMinutes = String.format("%02d", diff.minutes)
+                val durationTime: String = diffHours + "h" + diffMinutes
+                val editDuration: TextView = root.findViewById(R.id.durationTime)
+                editDuration.text = durationTime
+            }
+        }
         return root
     }
+}
+
+fun difference(start: Time, stop: Time): Time {
+    val diff = Time(0, 0, 0)
+
+    if (stop.seconds > start.seconds) {
+        --start.minutes
+        start.seconds += 60
+    }
+
+    diff.seconds = start.seconds - stop.seconds
+    if (stop.minutes > start.minutes) {
+        --start.hours
+        start.minutes += 60
+    }
+
+    diff.minutes = start.minutes - stop.minutes
+    diff.hours = start.hours - stop.hours
+
+    return diff
 }
