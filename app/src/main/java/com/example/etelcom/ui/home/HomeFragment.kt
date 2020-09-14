@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         })
         val interventionButton: Button = root.findViewById(R.id.interventionHour)
         interventionButton.setOnClickListener { view ->
-            // Gets the hour of the device
+            // Get current time
             val dateFormat: DateFormat = SimpleDateFormat("HH:mm")
             val date = Date()
             val currentHour = dateFormat.format(date)
