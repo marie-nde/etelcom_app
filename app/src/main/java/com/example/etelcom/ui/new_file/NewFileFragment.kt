@@ -89,6 +89,11 @@ class NewFileFragment : Fragment() {
                 val errorToast = Toast.makeText(requireActivity(),"Calcul impossible", Toast.LENGTH_LONG)
                 errorToast.show();
             }
+            else if (editBegin.text.toString().length != 5 || editEnd.text.toString().length != 5) {
+                val errorToast = Toast.makeText(requireActivity(),"Le format de l'heure doit" +
+                        " être celui-ci : 00h00", Toast.LENGTH_LONG)
+                errorToast.show();
+            }
             else {
                 val beginHour: String = editBegin.text.substring(0, 2)
                 val beginMinute: String = editBegin.text.substring(3, 5)
