@@ -7,9 +7,7 @@ import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import com.example.etelcom.R
@@ -112,6 +110,28 @@ class NewFileFragment : Fragment() {
                 editDuration.text = durationTime
             }
         }
+        // Access the items of the tech list
+        val technicians = resources.getStringArray(R.array.technicians)
+        // Access the spinner
+        val spinner: Spinner = root.findViewById(R.id.tech_spinner)
+        if (spinner != null) {
+            val adapter = ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_item, technicians
+            )
+            spinner.adapter = adapter
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    return
+                }
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    return
+                }
+            }
+        }
+
         return root
     }
 }
