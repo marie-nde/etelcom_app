@@ -11,6 +11,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <CheckBox
+        android:id="@+id/checkBoxStatus2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="En cours"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxStatus3"
+        app:layout_constraintHorizontal_bias="0.391"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxStatus1"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxStatus1" />
+
+    <CheckBox
+        android:id="@+id/checkBoxStatus3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Devis"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxStatus2" />
+
+    <CheckBox
+        android:id="@+id/checkBoxStatus1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Résolu"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_status" />
+
+    <TextView
+        android:id="@+id/text_status"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Statut"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxMaint1" />
+
+    <TextView
+        android:id="@+id/text_maintenance"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Maintenance"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxInter1" />
+
     <TextView
         android:id="@+id/text_inter"
         android:layout_width="155dp"
@@ -173,8 +232,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:text="Commencer l'intervention"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -237,10 +296,13 @@
         android:id="@+id/calBtn"
         android:layout_width="51dp"
         android:layout_height="46dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="7dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/date"
         app:layout_constraintTop_toBottomOf="@+id/text_date"
         app:srcCompat="@drawable/ic_calendar" />
 
@@ -320,9 +382,12 @@
         android:id="@+id/durationAction"
         android:layout_width="51dp"
         android:layout_height="46dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         app:layout_constraintEnd_toStartOf="@+id/ref"
+        app:layout_constraintStart_toEndOf="@+id/durationTime"
         app:layout_constraintTop_toTopOf="@+id/durationTime"
         app:srcCompat="@drawable/ic_clock" />
 
@@ -372,8 +437,8 @@
         android:id="@+id/checkBoxInter1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:text="Site"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -397,12 +462,56 @@
         android:id="@+id/checkBoxInter3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="Atelier"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/checkBoxInter2" />
+
+    <CheckBox
+        android:id="@+id/checkBoxMaint1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="PC"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxMaint2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_maintenance" />
+
+    <CheckBox
+        android:id="@+id/checkBoxMaint2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Serveur"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxMaint3"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxMaint1"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxMaint1" />
+
+    <CheckBox
+        android:id="@+id/checkBoxMaint3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Réseau"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxMaint4"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxMaint2"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxMaint2" />
+
+    <CheckBox
+        android:id="@+id/checkBoxMaint4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Téléphonie"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxMaint3"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxMaint3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
