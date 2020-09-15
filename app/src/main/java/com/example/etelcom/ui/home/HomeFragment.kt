@@ -28,20 +28,11 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textButton: TextView = root.findViewById(R.id.interventionHour)
+        val textHome: TextView = root.findViewById(R.id.textHome)
         // The text of the button is in HomeViewModel
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textButton.text = it
+            textHome.text = it
         })
-        val interventionButton: Button = root.findViewById(R.id.interventionHour)
-        interventionButton.setOnClickListener { view ->
-            // Get current time
-            val dateFormat: DateFormat = SimpleDateFormat("HH:mm")
-            val date = Date()
-            val currentHour = dateFormat.format(date)
-            Snackbar.make(view, "Heure de début d'intervention définie à : $currentHour", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
         return root
     }
 }

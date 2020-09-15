@@ -11,6 +11,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/text_inter"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Intervention"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailIntervention" />
+
     <EditText
         android:id="@+id/detailIntervention"
         android:layout_width="0dp"
@@ -354,6 +367,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_tech" />
+
+    <CheckBox
+        android:id="@+id/checkBoxInter1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="Site"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_inter" />
+
+    <CheckBox
+        android:id="@+id/checkBoxInter2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Prise en main"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxInter3"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxInter1"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxInter1" />
+
+    <CheckBox
+        android:id="@+id/checkBoxInter3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:text="Atelier"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxInter2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
