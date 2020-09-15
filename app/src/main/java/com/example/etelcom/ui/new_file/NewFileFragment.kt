@@ -82,7 +82,6 @@ class NewFileFragment : Fragment() {
         durationAction.setOnClickListener {
             val editBegin: TextView = root.findViewById(R.id.beginHour)
             val editEnd: TextView = root.findViewById(R.id.endHour)
-            d("marie", "$editBegin et $editEnd")
             if (editBegin.text.toString().isEmpty() || editEnd.text.toString().isEmpty()) {
                 val errorToast = Toast.makeText(requireActivity(),"Calcul impossible", Toast.LENGTH_LONG)
                 errorToast.show();
@@ -117,7 +116,7 @@ class NewFileFragment : Fragment() {
         if (spinner != null) {
             val adapter = ArrayAdapter(
                 requireActivity(),
-                android.R.layout.simple_spinner_item, technicians
+                android.R.layout.simple_spinner_dropdown_item, technicians
             )
             spinner.adapter = adapter
             spinner.onItemSelectedListener = object :
@@ -131,7 +130,6 @@ class NewFileFragment : Fragment() {
                 }
             }
         }
-
         return root
     }
 }
