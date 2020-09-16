@@ -1,9 +1,11 @@
 package com.example.etelcom.ui.new_file
 
-import android.app.*
+import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +13,8 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import com.example.etelcom.R
-import org.w3c.dom.Text
+import com.example.etelcom.ui.AfterValidationActivity
+import kotlinx.android.synthetic.main.fragment_new_file.*
 import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -109,6 +112,7 @@ class NewFileFragment : Fragment() {
                 editDuration.text = durationTime
             }
         }
+
         // Access the items of the tech list
         val technicians = resources.getStringArray(R.array.technicians)
         // Access the spinner
@@ -123,14 +127,68 @@ class NewFileFragment : Fragment() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
-                    return
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    return
                 }
             }
         }
+
+        // Save the data entered
+        val validateBtn: Button = root.findViewById(R.id.validateBtn)
+        validateBtn.setOnClickListener {
+            saveData()
+            val intent = Intent(requireActivity(), AfterValidationActivity::class.java)
+            startActivity(intent)
+        }
+
         return root
+    }
+
+    private fun saveData() {
+        val clientName: String = clientName.text.toString()
+        val siteName: String = siteName.text.toString()
+        val date: String = date.text.toString()
+        val beginHour: String = beginHour.text.toString()
+        val endHour: String = endHour.text.toString()
+        val durationTime: String = durationTime.text.toString()
+        val ref: String = ref.text.toString()
+        val objectIntervention: String = objectIntervention.text.toString()
+        val detailIntervention: String = detailIntervention.text.toString()
+        val tech: String = tech_spinner.selectedItem.toString();
+
+        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.apply {
+            putString("CLIENT", clientName)
+            putString("SITE", siteName)
+            putString("DATE", date)
+            putString("BEGIN", beginHour)
+            putString("END", endHour)
+            putString("DURATION", durationTime)
+            putString("REF", ref)
+            putString("OBJECT", objectIntervention)
+            putString("DETAIL", detailIntervention)
+            putString("TECH", tech)
+            putBoolean("SITE", checkBoxInter1.isChecked)
+            putBoolean("PRISE", checkBoxInter2.isChecked)
+            putBoolean("ATELIER", checkBoxInter3.isChecked)
+            putBoolean("PC", checkBoxMaint1.isChecked)
+            putBoolean("SERVER", checkBoxMaint2.isChecked)
+            putBoolean("NETWORK", checkBoxMaint3.isChecked)
+            putBoolean("PHONE", checkBoxMaint4.isChecked)
+            putBoolean("DONE", checkBoxStatus1.isChecked)
+            putBoolean("INPROGRESS", checkBoxStatus2.isChecked)
+            putBoolean("DEVIS", checkBoxStatus3.isChecked)
+            putBoolean("MAINTENANCE", checkBoxType1.isChecked)
+            putBoolean("FACTURABLE", checkBoxType2.isChecked)
+        }.apply()
+        Toast.makeText(requireActivity(), "Enregistré", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun loadData() {
+        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        val checkBox1 = sharedPreferences.getBoolean("SITE", false)
+        val checkBox2 = sharedPreferences.getBoolean("PRISE", false)
     }
 }
 
