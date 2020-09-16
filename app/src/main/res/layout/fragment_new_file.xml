@@ -45,6 +45,19 @@
         app:layout_constraintTop_toBottomOf="@+id/text_status" />
 
     <TextView
+        android:id="@+id/text_type"
+        android:layout_width="155dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Type"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxStatus1" />
+
+    <TextView
         android:id="@+id/text_status"
         android:layout_width="155dp"
         android:layout_height="20dp"
@@ -477,7 +490,6 @@
         android:layout_marginLeft="16dp"
         android:text="PC"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/checkBoxMaint2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_maintenance" />
 
@@ -510,8 +522,47 @@
         android:text="Téléphonie"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxMaint3"
         app:layout_constraintTop_toTopOf="@+id/checkBoxMaint3" />
+
+    <CheckBox
+        android:id="@+id/checkBoxType1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Maintenance"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_type" />
+
+    <CheckBox
+        android:id="@+id/checkBoxType2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="Facturable"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxType1"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxType1" />
+
+    <Button
+        android:id="@+id/validateBtn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="Valider"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxType1"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
