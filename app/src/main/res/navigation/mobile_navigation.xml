@@ -9,12 +9,20 @@
         android:id="@+id/nav_home"
         android:name="com.example.etelcom.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+    </fragment>
 
     <fragment
         android:id="@+id/nav_new_file"
         android:name="com.example.etelcom.ui.new_file.NewFileFragment"
         android:label="@string/menu_new_file"
-        tools:layout="@layout/fragment_new_file" />
+        tools:layout="@layout/fragment_new_file" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_after_navigation"
+        android:name="com.example.etelcom.ui.AfterValidationFragment"
+        android:label="@string/menu_after_validation"
+        tools:layout="@layout/fragment_after_validation" />
 
 </navigation>

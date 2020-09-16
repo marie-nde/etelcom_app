@@ -13,7 +13,7 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import com.example.etelcom.R
-import com.example.etelcom.ui.AfterValidationActivity
+import com.example.etelcom.ui.AfterValidationFragment
 import kotlinx.android.synthetic.main.fragment_new_file.*
 import java.sql.Time
 import java.text.DateFormat
@@ -133,12 +133,16 @@ class NewFileFragment : Fragment() {
             }
         }
 
-        // Save the data entered
+        // Save the data entered and move to another fragment
         val validateBtn: Button = root.findViewById(R.id.validateBtn)
         validateBtn.setOnClickListener {
             saveData()
-            val intent = Intent(requireActivity(), AfterValidationActivity::class.java)
-            startActivity(intent)
+            val newFragment: Fragment = AfterValidationFragment()
+            val fragmentManager = requireActivity().supportFragmentManager
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.nav_new_file, newFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
         return root
