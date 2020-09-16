@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.etelcom.R
 import com.example.etelcom.ui.AfterValidationFragment
 import kotlinx.android.synthetic.main.fragment_new_file.*
@@ -137,12 +139,9 @@ class NewFileFragment : Fragment() {
         val validateBtn: Button = root.findViewById(R.id.validateBtn)
         validateBtn.setOnClickListener {
             saveData()
-            val newFragment: Fragment = AfterValidationFragment()
-            val fragmentManager = requireActivity().supportFragmentManager
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.nav_new_file, newFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            findNavController().navigate(
+                R.id.new_file_to_after_validation
+            )
         }
 
         return root
