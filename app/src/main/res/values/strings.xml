@@ -8,6 +8,8 @@
     <string name="menu_home">Accueil</string>
     <string name ="menu_new_file">Nouvelle fiche</string>
     <string name="menu_after_validation">Valider</string>
+    <string name="pdf_name">Fiche Intervention ETELCOM v2-5</string>
+
     <string-array name="technicians">
         <item>Sélectionner un technicien</item>
         <item>Fabien Dumont</item>

@@ -42,10 +42,10 @@
         android:text="Résolu"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_status" />
+        app:layout_constraintTop_toBottomOf="@+id/textStatus" />
 
     <TextView
-        android:id="@+id/text_type"
+        android:id="@+id/textType"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBoxStatus1" />
 
     <TextView
-        android:id="@+id/text_status"
+        android:id="@+id/textStatus"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBoxMaint1" />
 
     <TextView
-        android:id="@+id/text_maintenance"
+        android:id="@+id/textMaintenance"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBoxInter1" />
 
     <TextView
-        android:id="@+id/text_inter"
+        android:id="@+id/textInter"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -110,10 +110,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_details" />
+        app:layout_constraintTop_toBottomOf="@+id/textDetails" />
 
     <TextView
-        android:id="@+id/text_details"
+        android:id="@+id/textDetails"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -139,10 +139,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_object" />
+        app:layout_constraintTop_toBottomOf="@+id/textObject" />
 
     <TextView
-        android:id="@+id/text_object"
+        android:id="@+id/textObject"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -155,7 +155,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tech_spinner" />
 
     <TextView
-        android:id="@+id/text_tech"
+        android:id="@+id/textTech"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -177,10 +177,10 @@
         android:hint="Réf"
         android:inputType="textCapCharacters"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_ref" />
+        app:layout_constraintTop_toBottomOf="@+id/textRef" />
 
     <TextView
-        android:id="@+id/text_ref"
+        android:id="@+id/textRef"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -189,7 +189,7 @@
         android:text="Réf"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_duration" />
+        app:layout_constraintTop_toTopOf="@+id/textDuration" />
 
     <EditText
         android:id="@+id/siteName"
@@ -205,10 +205,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_site" />
+        app:layout_constraintTop_toBottomOf="@+id/textSite" />
 
     <TextView
-        android:id="@+id/text_site"
+        android:id="@+id/textSite"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -270,10 +270,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_client" />
+        app:layout_constraintTop_toBottomOf="@+id/textClient" />
 
     <TextView
-        android:id="@+id/text_client"
+        android:id="@+id/textClient"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -303,7 +303,7 @@
         app:layout_constraintEnd_toStartOf="@+id/calBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_date" />
+        app:layout_constraintTop_toBottomOf="@+id/textDate" />
 
     <ImageButton
         android:id="@+id/calBtn"
@@ -316,7 +316,7 @@
         android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/date"
-        app:layout_constraintTop_toBottomOf="@+id/text_date"
+        app:layout_constraintTop_toBottomOf="@+id/textDate"
         app:srcCompat="@drawable/ic_calendar" />
 
     <EditText
@@ -329,10 +329,10 @@
         android:hint="Heure de fin"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_end" />
+        app:layout_constraintTop_toBottomOf="@+id/textEnd" />
 
     <TextView
-        android:id="@+id/text_duration"
+        android:id="@+id/textDuration"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -341,13 +341,13 @@
         android:layout_marginTop="8dp"
         android:text="Durée d'intervention"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/text_ref"
+        app:layout_constraintEnd_toStartOf="@+id/textRef"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/beginHour" />
 
     <TextView
-        android:id="@+id/text_beginning"
+        android:id="@+id/textBeginning"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -358,13 +358,13 @@
         android:layout_marginRight="8dp"
         android:text="Début d'intervention"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/text_end"
+        app:layout_constraintEnd_toStartOf="@+id/textEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <TextView
-        android:id="@+id/text_end"
+        android:id="@+id/textEnd"
         android:layout_width="150dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -373,7 +373,7 @@
         android:text="Fin d'intervention"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_beginning" />
+        app:layout_constraintTop_toTopOf="@+id/textBeginning" />
 
     <EditText
         android:id="@+id/durationTime"
@@ -389,7 +389,7 @@
         app:layout_constraintEnd_toStartOf="@+id/durationAction"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_duration" />
+        app:layout_constraintTop_toBottomOf="@+id/textDuration" />
 
     <ImageButton
         android:id="@+id/durationAction"
@@ -405,7 +405,7 @@
         app:srcCompat="@drawable/ic_clock" />
 
     <TextView
-        android:id="@+id/text_date"
+        android:id="@+id/textDate"
         android:layout_width="155dp"
         android:layout_height="20dp"
         android:layout_gravity="center"
@@ -431,20 +431,20 @@
         app:layout_constraintEnd_toStartOf="@+id/endHour"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_beginning" />
+        app:layout_constraintTop_toBottomOf="@+id/textBeginning" />
 
     <Spinner
         android:id="@+id/tech_spinner"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_alignBottom="@id/text_tech"
+        android:layout_alignBottom="@id/textTech"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_tech" />
+        app:layout_constraintTop_toBottomOf="@+id/textTech" />
 
     <CheckBox
         android:id="@+id/checkBoxInter1"
@@ -455,7 +455,7 @@
         android:text="Site"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_inter" />
+        app:layout_constraintTop_toBottomOf="@+id/textInter" />
 
     <CheckBox
         android:id="@+id/checkBoxInter2"
@@ -491,7 +491,7 @@
         android:text="PC"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_maintenance" />
+        app:layout_constraintTop_toBottomOf="@+id/textMaintenance" />
 
     <CheckBox
         android:id="@+id/checkBoxMaint2"
@@ -533,7 +533,7 @@
         android:text="Maintenance"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_type" />
+        app:layout_constraintTop_toBottomOf="@+id/textType" />
 
     <CheckBox
         android:id="@+id/checkBoxType2"

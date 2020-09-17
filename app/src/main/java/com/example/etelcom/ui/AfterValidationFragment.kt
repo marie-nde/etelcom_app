@@ -17,6 +17,7 @@ class AfterValidationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_after_validation, container, false)
+
         return root
     }
 }
