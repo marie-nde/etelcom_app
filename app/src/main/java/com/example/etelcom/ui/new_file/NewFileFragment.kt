@@ -119,19 +119,17 @@ class NewFileFragment : Fragment() {
         val technicians = resources.getStringArray(R.array.technicians)
         // Access the spinner
         val spinner: Spinner = root.findViewById(R.id.tech_spinner)
-        if (spinner != null) {
-            val adapter = ArrayAdapter(
-                requireActivity(),
-                android.R.layout.simple_spinner_dropdown_item, technicians
-            )
-            spinner.adapter = adapter
-            spinner.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>,
-                                            view: View, position: Int, id: Long) {
-                }
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                }
+        val adapter = ArrayAdapter(
+            requireActivity(),
+            android.R.layout.simple_spinner_dropdown_item, technicians
+        )
+        spinner.adapter = adapter
+        spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>,
+                                        view: View?, position: Int, id: Long) {
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
             }
         }
 
@@ -185,7 +183,6 @@ class NewFileFragment : Fragment() {
             putBoolean("MAINTENANCE", checkBoxType1.isChecked)
             putBoolean("FACTURABLE", checkBoxType2.isChecked)
         }.apply()
-        Toast.makeText(requireActivity(), "Enregistré", Toast.LENGTH_SHORT).show()
     }
 
     private fun loadData() {
