@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class MainActivity : AppCompatActivity() {
@@ -47,6 +48,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_new_file), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        PDFBoxResourceLoader.init(applicationContext);
     }
 
     // Click on the drawer
