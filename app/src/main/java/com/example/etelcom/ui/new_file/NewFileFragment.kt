@@ -1,22 +1,23 @@
 package com.example.etelcom.ui.new_file
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.etelcom.R
-import com.example.etelcom.ui.AfterValidationFragment
+import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.android.synthetic.main.fragment_new_file.*
+import java.io.File
+import java.io.InputStream
 import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -25,6 +26,7 @@ import java.util.*
 
 class NewFileFragment : Fragment() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -133,13 +135,26 @@ class NewFileFragment : Fragment() {
             }
         }
 
-        // Save the data entered and move to another fragment
         val validateBtn: Button = root.findViewById(R.id.validateBtn)
         validateBtn.setOnClickListener {
+            // Save the data entered
             saveData()
-            findNavController().navigate(
-                R.id.new_file_to_after_validation
-            )
+
+            // Create a directory "Fiches" if it doesn't exist
+            var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
+            val dir = File("$extStorageDirectory/Fiches/")
+            Log.d("marie", "$extStorageDirectory/Fiches/")
+            if (!dir.isDirectory) {
+                dir.mkdir()
+            }
+
+            // Load pdf document
+            val pdfName = "FicheInterventionEtelcomModif.pdf"
+            val path = requireActivity().getFileStreamPath("$pdfName")
+            if (path.exists()) {
+                val document: InputStream = requireActivity().assets.open("$pdfName")
+                PDDocument.load(document)
+            }
         }
 
         return root
