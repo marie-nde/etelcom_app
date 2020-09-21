@@ -60,7 +60,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation "commons-logging:commons-logging-api:1.1"
-    implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
+    //noinspection DuplicatePlatformClasses
+    // implementation "commons-logging:commons-logging-api:1.1"
+    // implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
+    implementation 'org.apache.pdfbox:pdfbox:2.0.21'
     implementation 'com.android.support:multidex:1.0.3'
 }

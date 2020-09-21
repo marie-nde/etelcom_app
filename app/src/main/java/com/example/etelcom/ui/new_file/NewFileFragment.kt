@@ -16,10 +16,12 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import com.example.etelcom.R
-import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.android.synthetic.main.fragment_new_file.*
+import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
+import org.apache.pdfbox.pdmodel.interactive.form.PDField
 import java.io.File
-import java.io.InputStream
 import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -143,6 +145,9 @@ class NewFileFragment : Fragment() {
             // Save the data entered
             saveData()
 
+            // Load the data saved
+            loadData()
+
             // Create a directory "Fiches" if it doesn't exist
             var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
             val dir = File("$extStorageDirectory/Fiches/")
@@ -150,18 +155,7 @@ class NewFileFragment : Fragment() {
                 dir.mkdir()
             }
 
-            // Load empty pdf document
-            val pdfName = "FicheInterventionEtelcomModif.pdf"
-            val path = requireActivity().getFileStreamPath("$pdfName")
-            if (path.exists()) {
-                val document: InputStream = requireActivity().assets.open("$pdfName")
-                PDDocument.load(document)
-            }
-
-            // Load the data saved
-            loadData()
-
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            val intent = Intent(Intent.ACTION_VIEW)
             val dirFiles: Uri = Uri.parse("content://$dir")
             intent.setDataAndType(dirFiles, "*/*")
             startActivity(intent)
@@ -195,7 +189,7 @@ class NewFileFragment : Fragment() {
             putString("OBJECT", objectIntervention)
             putString("DETAIL", detailIntervention)
             putString("TECH", tech)
-            putBoolean("SITE", checkBoxInter1.isChecked)
+            putBoolean("SITE1", checkBoxInter1.isChecked)
             putBoolean("PRISE", checkBoxInter2.isChecked)
             putBoolean("ATELIER", checkBoxInter3.isChecked)
             putBoolean("PC", checkBoxMaint1.isChecked)
@@ -222,7 +216,7 @@ class NewFileFragment : Fragment() {
         val savedObject = sharedPreferences.getString("OBJECT", "")
         val savedDetail = sharedPreferences.getString("DETAIL", "")
         val savedTech = sharedPreferences.getString("TECH", "")
-        val savedCheckBoxInter1 = sharedPreferences.getBoolean("SITE", false)
+        val savedCheckBoxInter1 = sharedPreferences.getBoolean("SITE1", false)
         val savedCheckBoxInter2 = sharedPreferences.getBoolean("PRISE", false)
         val savedCheckBoxInter3 = sharedPreferences.getBoolean("ATELIER", false)
         val savedCheckBoxMaint1 = sharedPreferences.getBoolean("PC", false)
@@ -234,6 +228,17 @@ class NewFileFragment : Fragment() {
         val savedCheckBoxStatus3 = sharedPreferences.getBoolean("DEVIS", false)
         val savedCheckBoxType1 = sharedPreferences.getBoolean("MAINTENANCE", false)
         val savedCheckBoxType2 = sharedPreferences.getBoolean("FACTURABLE", false)
+
+        // Load empty pdf document
+        val pdfName = "FicheInterventionEtelcomModif.pdf"
+        val document: PDDocument = PDDocument.load(requireActivity().assets.open("$pdfName"))
+        val docCatalog: PDDocumentCatalog = document.documentCatalog
+        val acroForm: PDAcroForm = docCatalog.acroForm
+
+        val field: PDField = acroForm.getField("client")
+        field.setValue("$savedClientName")
+        document.save("$savedDate" + "_" + "$savedClientName")
+        document.close()
     }
 }
 
