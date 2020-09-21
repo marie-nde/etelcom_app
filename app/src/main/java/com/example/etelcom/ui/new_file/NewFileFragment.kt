@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -135,6 +137,7 @@ class NewFileFragment : Fragment() {
             }
         }
 
+        // Click on the validation button
         val validateBtn: Button = root.findViewById(R.id.validateBtn)
         validateBtn.setOnClickListener {
             // Save the data entered
@@ -143,18 +146,22 @@ class NewFileFragment : Fragment() {
             // Create a directory "Fiches" if it doesn't exist
             var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
             val dir = File("$extStorageDirectory/Fiches/")
-            Log.d("marie", "$extStorageDirectory/Fiches/")
             if (!dir.isDirectory) {
                 dir.mkdir()
             }
 
-            // Load pdf document
+            // Load empty pdf document
             val pdfName = "FicheInterventionEtelcomModif.pdf"
             val path = requireActivity().getFileStreamPath("$pdfName")
             if (path.exists()) {
                 val document: InputStream = requireActivity().assets.open("$pdfName")
                 PDDocument.load(document)
             }
+
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            val dirFiles: Uri = Uri.parse("content://$dir")
+            intent.setDataAndType(dirFiles, "*/*")
+            startActivity(intent)
         }
 
         return root
