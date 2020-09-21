@@ -158,6 +158,9 @@ class NewFileFragment : Fragment() {
                 PDDocument.load(document)
             }
 
+            // Load the data saved
+            loadData()
+
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             val dirFiles: Uri = Uri.parse("content://$dir")
             intent.setDataAndType(dirFiles, "*/*")
@@ -209,8 +212,28 @@ class NewFileFragment : Fragment() {
 
     private fun loadData() {
         val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val checkBox1 = sharedPreferences.getBoolean("SITE", false)
-        val checkBox2 = sharedPreferences.getBoolean("PRISE", false)
+        val savedClientName = sharedPreferences.getString("CLIENT", "")
+        val savedSiteName = sharedPreferences.getString("SITE", "")
+        val savedDate = sharedPreferences.getString("DATE", "")
+        val savedBeginHour = sharedPreferences.getString("BEGIN", "")
+        val savedEndHour = sharedPreferences.getString("END", "")
+        val savedDuration = sharedPreferences.getString("DURATION", "")
+        val savedRef = sharedPreferences.getString("REF", "")
+        val savedObject = sharedPreferences.getString("OBJECT", "")
+        val savedDetail = sharedPreferences.getString("DETAIL", "")
+        val savedTech = sharedPreferences.getString("TECH", "")
+        val savedCheckBoxInter1 = sharedPreferences.getBoolean("SITE", false)
+        val savedCheckBoxInter2 = sharedPreferences.getBoolean("PRISE", false)
+        val savedCheckBoxInter3 = sharedPreferences.getBoolean("ATELIER", false)
+        val savedCheckBoxMaint1 = sharedPreferences.getBoolean("PC", false)
+        val savedCheckBoxMaint2 = sharedPreferences.getBoolean("SERVER", false)
+        val savedCheckBoxMaint3 = sharedPreferences.getBoolean("NETWORK", false)
+        val savedCheckBoxMaint4 = sharedPreferences.getBoolean("PHONE", false)
+        val savedCheckBoxStatus1 = sharedPreferences.getBoolean("DONE", false)
+        val savedCheckBoxStatus2 = sharedPreferences.getBoolean("INPROGRESS", false)
+        val savedCheckBoxStatus3 = sharedPreferences.getBoolean("DEVIS", false)
+        val savedCheckBoxType1 = sharedPreferences.getBoolean("MAINTENANCE", false)
+        val savedCheckBoxType2 = sharedPreferences.getBoolean("FACTURABLE", false)
     }
 }
 
