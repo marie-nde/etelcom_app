@@ -7,20 +7,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import com.example.etelcom.R
+import com.itextpdf.forms.PdfAcroForm
+import com.itextpdf.kernel.pdf.PdfDocument
+import com.itextpdf.kernel.pdf.PdfReader
+import com.itextpdf.kernel.pdf.PdfWriter
 import kotlinx.android.synthetic.main.fragment_new_file.*
-import org.apache.pdfbox.pdmodel.PDDocument
-import org.apache.pdfbox.pdmodel.PDDocumentCatalog
-import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm
-import org.apache.pdfbox.pdmodel.interactive.form.PDField
 import java.io.File
 import java.sql.Time
 import java.text.DateFormat
@@ -30,6 +31,7 @@ import java.util.*
 
 class NewFileFragment : Fragment() {
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -204,6 +206,7 @@ class NewFileFragment : Fragment() {
         }.apply()
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun loadData() {
         val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val savedClientName = sharedPreferences.getString("CLIENT", "")
@@ -230,15 +233,15 @@ class NewFileFragment : Fragment() {
         val savedCheckBoxType2 = sharedPreferences.getBoolean("FACTURABLE", false)
 
         // Load empty pdf document
-        val pdfName = "FicheInterventionEtelcomModif.pdf"
-        val document: PDDocument = PDDocument.load(requireActivity().assets.open("$pdfName"))
-        val docCatalog: PDDocumentCatalog = document.documentCatalog
-        val acroForm: PDAcroForm = docCatalog.acroForm
+        val src = "/data/data/com.example.etelcom/fiche_intervention_modif.pdf"
+        var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
+        val dest = "$extStorageDirectory/Fiches/$savedRef" + "_$savedClientName.pdf"
 
-        val field: PDField = acroForm.getField("client")
-        field.setValue("$savedClientName")
-        document.save("$savedDate" + "_" + "$savedClientName")
-        document.close()
+        val pdfDoc = PdfDocument(PdfReader(src), PdfWriter(dest))
+        val form: PdfAcroForm = PdfAcroForm.getAcroForm(pdfDoc, true)
+        form.getField("client").setValue("$savedClientName")
+        form.getField("site").setValue("$savedSiteName")
+        pdfDoc.close()
     }
 }
 

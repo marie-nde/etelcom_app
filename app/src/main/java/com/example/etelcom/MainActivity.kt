@@ -2,6 +2,7 @@ package com.example.etelcom
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log.d
 import android.view.Menu
 import android.widget.Button
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.io.FileOutputStream
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_new_file), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        copyAssetFile()
     }
 
     // Click on the drawer
@@ -60,5 +64,24 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    @Throws(IOException::class)
+    private fun copyAssetFile() {
+
+        val outFileName = "/data/data/com.example.etelcom/fiche_intervention_modif.pdf"
+
+        val myOutput = FileOutputStream(outFileName)
+        val myInput = this.assets.open("fiche_intervention_modif.pdf")
+
+        val buffer = ByteArray(1024)
+        var length: Int = myInput.read(buffer)
+        while ((length) > 0) {
+            myOutput.write(buffer, 0, length)
+            length = myInput.read(buffer)
+        }
+        myInput.close()
+        myOutput.flush()
+        myOutput.close()
     }
 }

@@ -28,6 +28,8 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/library_release.kotlin_module'
+        exclude 'com/itextpdf/io/font/cmap_info.txt'
+        exclude 'com/itextpdf/io/font/cmap/*'
     }
 
     buildTypes {
@@ -63,6 +65,10 @@ dependencies {
     //noinspection DuplicatePlatformClasses
     // implementation "commons-logging:commons-logging-api:1.1"
     // implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
-    implementation 'org.apache.pdfbox:pdfbox:2.0.21'
-    implementation 'com.android.support:multidex:1.0.3'
+    //implementation 'org.apache.pdfbox:pdfbox:2.0.21'
+    //implementation 'com.android.support:multidex:1.0.3'
+    //implementation "com.pdftron:pdftron:8.0.0"
+    //implementation "com.pdftron:tools:8.0.0"
+    //implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.itextpdf:itext7-core:7.0.2'
 }
