@@ -11,6 +11,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/indicationDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="(Max : 15 lignes)"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/detailIntervention"
+        app:layout_constraintStart_toEndOf="@+id/textDetails" />
+
     <CheckBox
         android:id="@+id/checkBoxStatus2"
         android:layout_width="wrap_content"
@@ -106,6 +117,7 @@
         android:layout_marginRight="24dp"
         android:ems="10"
         android:hint="Détail de l'intervention"
+        android:maxLength="1300"
         android:inputType="textCapSentences|textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -122,6 +134,7 @@
         android:layout_marginTop="8dp"
         android:text="Détail de l'intervention"
         android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/indicationDetail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/objectIntervention" />
 
@@ -135,6 +148,7 @@
         android:layout_marginRight="24dp"
         android:ems="10"
         android:hint="Objet de l'intervention"
+        android:maxLength="260"
         android:inputType="textCapSentences|textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
@@ -151,6 +165,7 @@
         android:layout_marginTop="8dp"
         android:text="Objet de l'intervention"
         android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/indicationObject"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tech_spinner" />
 
@@ -327,6 +342,7 @@
         android:layout_marginRight="24dp"
         android:ems="10"
         android:hint="Heure de fin"
+        android:maxLength="5"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textEnd" />
@@ -427,6 +443,7 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="Heure de début"
+        android:maxLength="5"
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/endHour"
         app:layout_constraintHorizontal_bias="0.0"
@@ -563,6 +580,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxType1"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/indicationObject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="(Max : 3 lignes)"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/objectIntervention"
+        app:layout_constraintStart_toEndOf="@+id/textObject" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
