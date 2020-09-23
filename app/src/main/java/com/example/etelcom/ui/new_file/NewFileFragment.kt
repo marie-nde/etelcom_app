@@ -9,6 +9,8 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.method.TextKeyListener.clear
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,7 @@ import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.PdfWriter
 import kotlinx.android.synthetic.main.fragment_new_file.*
+import org.slf4j.MDC.clear
 import java.io.File
 import java.sql.Time
 import java.text.DateFormat
@@ -83,7 +86,7 @@ class NewFileFragment : Fragment() {
                     val dayWithLeadingZero = String.format("%02d", dayOfMonth)
                     val monthWithLeadingZero = String.format("%02d", monthOfYear + 1)
                     editDate.setText(
-                        dayWithLeadingZero + "/" + monthWithLeadingZero + "/" + year
+                        "$dayWithLeadingZero/$monthWithLeadingZero/$year"
                     )
                 }, mYear, mMonth, mDay
             )
@@ -109,17 +112,23 @@ class NewFileFragment : Fragment() {
                 val beginMinute: String = editBegin.text.substring(3, 5)
                 val endHour: String = editEnd.text.substring(0, 2)
                 val endMinute: String = editEnd.text.substring(3, 5)
+                if (beginHour.toIntOrNull() == null || beginMinute.toIntOrNull() == null || endHour.toIntOrNull() == null || endMinute.toIntOrNull() == null) {
+                    val errorToast = Toast.makeText(requireActivity(),"Le format de l'heure doit" +
+                            " être celui-ci : 00h00", Toast.LENGTH_LONG)
+                    errorToast.show()
+                }
+                else {
+                    val stop = Time(beginHour.toInt(), beginMinute.toInt(), 0)
+                    val start = Time(endHour.toInt(), endMinute.toInt(), 0)
+                    val diff: Time
 
-                val stop = Time(beginHour.toInt(), beginMinute.toInt(), 0)
-                val start = Time(endHour.toInt(), endMinute.toInt(), 0)
-                val diff: Time
-
-                diff = difference(start, stop)
-                val diffHours = String.format("%02d", diff.hours)
-                val diffMinutes = String.format("%02d", diff.minutes)
-                val durationTime: String = diffHours + "h" + diffMinutes
-                val editDuration: TextView = root.findViewById(R.id.durationTime)
-                editDuration.text = durationTime
+                    diff = difference(start, stop)
+                    val diffHours = String.format("%02d", diff.hours)
+                    val diffMinutes = String.format("%02d", diff.minutes)
+                    val durationTime: String = diffHours + "h" + diffMinutes
+                    val editDuration: TextView = root.findViewById(R.id.durationTime)
+                    editDuration.text = durationTime
+                }
             }
         }
 
@@ -147,9 +156,6 @@ class NewFileFragment : Fragment() {
             // Save the data entered
             saveData()
 
-            // Load the data saved
-            loadData()
-
             // Create a directory "Fiches" if it doesn't exist
             var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
             val dir = File("$extStorageDirectory/Fiches/")
@@ -157,6 +163,10 @@ class NewFileFragment : Fragment() {
                 dir.mkdir()
             }
 
+            // Load the data saved and fills a pdf
+            loadData()
+
+            // Open folder from device
             val intent = Intent(Intent.ACTION_VIEW)
             val dirFiles: Uri = Uri.parse("content://$dir")
             intent.setDataAndType(dirFiles, "*/*")
@@ -191,18 +201,18 @@ class NewFileFragment : Fragment() {
             putString("OBJECT", objectIntervention)
             putString("DETAIL", detailIntervention)
             putString("TECH", tech)
-            putBoolean("SITE1", checkBoxInter1.isChecked)
-            putBoolean("PRISE", checkBoxInter2.isChecked)
-            putBoolean("ATELIER", checkBoxInter3.isChecked)
-            putBoolean("PC", checkBoxMaint1.isChecked)
-            putBoolean("SERVER", checkBoxMaint2.isChecked)
-            putBoolean("NETWORK", checkBoxMaint3.isChecked)
-            putBoolean("PHONE", checkBoxMaint4.isChecked)
-            putBoolean("DONE", checkBoxStatus1.isChecked)
-            putBoolean("INPROGRESS", checkBoxStatus2.isChecked)
-            putBoolean("DEVIS", checkBoxStatus3.isChecked)
-            putBoolean("MAINTENANCE", checkBoxType1.isChecked)
-            putBoolean("FACTURABLE", checkBoxType2.isChecked)
+            if (checkBoxInter1.isChecked) putBoolean("SITEBOX", true)
+            if (checkBoxInter2.isChecked) putBoolean("PRISE", true)
+            if (checkBoxInter3.isChecked) putBoolean("ATELIER", true)
+            if (checkBoxMaint1.isChecked) putBoolean("PC", true)
+            if (checkBoxMaint2.isChecked) putBoolean("SERVER", true)
+            if (checkBoxMaint3.isChecked) putBoolean("NETWORK", true)
+            if (checkBoxMaint4.isChecked) putBoolean("PHONE", true)
+            if (checkBoxStatus1.isChecked) putBoolean("DONE", true)
+            if (checkBoxStatus2.isChecked) putBoolean("INPROGRESS", true)
+            if (checkBoxStatus3.isChecked) putBoolean("DEVIS", true)
+            if (checkBoxType1.isChecked) putBoolean("MAINTENANCE", true)
+            if (checkBoxType2.isChecked) putBoolean("FACTURABLE", true)
         }.apply()
     }
 
@@ -219,7 +229,7 @@ class NewFileFragment : Fragment() {
         val savedObject = sharedPreferences.getString("OBJECT", "")
         val savedDetail = sharedPreferences.getString("DETAIL", "")
         val savedTech = sharedPreferences.getString("TECH", "")
-        val savedCheckBoxInter1 = sharedPreferences.getBoolean("SITE1", false)
+        val savedCheckBoxInter1 = sharedPreferences.getBoolean("SITEBOX", false)
         val savedCheckBoxInter2 = sharedPreferences.getBoolean("PRISE", false)
         val savedCheckBoxInter3 = sharedPreferences.getBoolean("ATELIER", false)
         val savedCheckBoxMaint1 = sharedPreferences.getBoolean("PC", false)
@@ -235,12 +245,33 @@ class NewFileFragment : Fragment() {
         // Load empty pdf document
         val src = "/data/data/com.example.etelcom/fiche_intervention_modif.pdf"
         var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
-        val dest = "$extStorageDirectory/Fiches/$savedRef" + "_$savedClientName.pdf"
+        val dest = "$extStorageDirectory/Fiches/$savedClientName" + "_$savedRef.pdf"
 
+        // Put the data into a pdf
         val pdfDoc = PdfDocument(PdfReader(src), PdfWriter(dest))
         val form: PdfAcroForm = PdfAcroForm.getAcroForm(pdfDoc, true)
         form.getField("client").setValue("$savedClientName")
         form.getField("site").setValue("$savedSiteName")
+        form.getField("date").setValue("$savedDate")
+        form.getField("beginHour").setValue("$savedBeginHour")
+        form.getField("endHour").setValue("$savedEndHour")
+        form.getField("duration").setValue("$savedDuration")
+        form.getField("ref").setValue("$savedRef")
+        form.getField("tech").setValue("$savedTech")
+        form.getField("object").setValue("$savedObject")
+        form.getField("detail").setValue("$savedDetail")
+        if (savedCheckBoxInter1) { form.getField("checkBoxInter1").setValue("$savedCheckBoxInter1") }
+        if (savedCheckBoxInter2) { form.getField("checkBoxInter2").setValue("$savedCheckBoxInter2") }
+        if (savedCheckBoxInter3) { form.getField("checkBoxInter3").setValue("$savedCheckBoxInter3") }
+        if (savedCheckBoxMaint1) { form.getField("checkBoxMaint1").setValue("$savedCheckBoxMaint1") }
+        if (savedCheckBoxMaint2) { form.getField("checkBoxMaint2").setValue("$savedCheckBoxMaint2") }
+        if (savedCheckBoxMaint3) { form.getField("checkBoxMaint3").setValue("$savedCheckBoxMaint3") }
+        if (savedCheckBoxMaint4) { form.getField("checkBoxMaint4").setValue("$savedCheckBoxMaint4") }
+        if (savedCheckBoxStatus1) { form.getField("checkBoxStatus1").setValue("$savedCheckBoxStatus1") }
+        if (savedCheckBoxStatus2) { form.getField("checkBoxStatus2").setValue("$savedCheckBoxStatus2") }
+        if (savedCheckBoxStatus3) { form.getField("checkBoxStatus3").setValue("$savedCheckBoxStatus3") }
+        if (savedCheckBoxType1) { form.getField("checkBoxType1").setValue("$savedCheckBoxType1") }
+        if (savedCheckBoxType2) { form.getField("checkBoxType2").setValue("$savedCheckBoxType2") }
         pdfDoc.close()
     }
 }
