@@ -1,13 +1,11 @@
 package com.etelcom.app.ui.new_file
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,10 +13,11 @@ import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.etelcom.app.R
 import com.itextpdf.forms.PdfAcroForm
@@ -175,7 +174,12 @@ class NewFileFragment : Fragment() {
             pref.clear()
             pref.commit()
 
-            // Open folder from device
+            // Message to say where is the new pdf
+            val duration = Toast.LENGTH_LONG
+            val toast = Toast.makeText(requireContext(), "Le fichier se trouve dans Fiches_Etelcom/", duration)
+            toast.show()
+
+            // Open folders from device
             val intent = Intent(Intent.ACTION_VIEW)
             val dirFiles: Uri = Uri.parse("content://$dir")
             intent.setDataAndType(dirFiles, "*/*")
