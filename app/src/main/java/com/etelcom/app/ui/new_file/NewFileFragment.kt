@@ -167,7 +167,7 @@ class NewFileFragment : Fragment() {
             }
 
             // Load the data saved and fills a pdf
-            loadData()
+            val savedPdf = loadData()
 
             // Remove Shared preferences data
             val pref: SharedPreferences.Editor = requireContext().getSharedPreferences("sharedPrefs", 0).edit()
@@ -176,13 +176,16 @@ class NewFileFragment : Fragment() {
 
             // Message to say where is the new pdf
             val duration = Toast.LENGTH_LONG
-            val toast = Toast.makeText(requireContext(), "Le fichier se trouve dans Fiches_Etelcom/", duration)
+            val toast = Toast.makeText(requireContext(), "Le fichier se trouve dans Fiches_Etelcom", duration)
             toast.show()
 
             // Open folders from device
             val intent = Intent(Intent.ACTION_VIEW)
-            val dirFiles: Uri = Uri.parse("content://$dir")
-            intent.setDataAndType(dirFiles, "*/*")
+            val file = File("$dir/$savedPdf")
+            val fileUri =  FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", file)
+            intent.setDataAndType(fileUri, "application/pdf")
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             startActivity(intent)
         }
 
@@ -230,7 +233,7 @@ class NewFileFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
-    private fun loadData() {
+    private fun loadData(): String {
         val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val savedClientName = sharedPreferences.getString("CLIENT", "")
         val savedSiteName = sharedPreferences.getString("SITE", "")
@@ -289,6 +292,7 @@ class NewFileFragment : Fragment() {
         if (savedCheckBoxType1) { form.getField("checkBoxType1").setValue("$savedCheckBoxType1") }
         if (savedCheckBoxType2) { form.getField("checkBoxType2").setValue("$savedCheckBoxType2") }
         pdfDoc.close()
+        return ("$savedClientName" + "_$savedRef.pdf")
     }
 }
 
