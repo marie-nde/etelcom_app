@@ -1,19 +1,14 @@
-package com.example.etelcom.ui.home
+package com.etelcom.app.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.etelcom.R
-import com.google.android.material.snackbar.Snackbar
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import com.etelcom.app.R
 
 
 class HomeFragment : Fragment() {

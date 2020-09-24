@@ -1,4 +1,4 @@
-package com.example.etelcom.ui.home
+package com.etelcom.app.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

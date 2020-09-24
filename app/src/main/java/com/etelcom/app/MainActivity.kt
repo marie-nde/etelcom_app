@@ -1,4 +1,4 @@
-package com.example.etelcom
+package com.etelcom.app
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -49,11 +49,6 @@ class MainActivity : AppCompatActivity() {
 
         // Copy the pdf model to our working directory
         copyAssetFile()
-
-        // Remove Shared preferences data
-        val pref: SharedPreferences.Editor = applicationContext.getSharedPreferences("sharedPrefs", 0).edit()
-        pref.clear()
-        pref.commit()
     }
 
     // Click on the drawer
@@ -72,7 +67,8 @@ class MainActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun copyAssetFile() {
 
-        val outFileName = "/data/data/com.example.etelcom/fiche_intervention_modif.pdf"
+        val packageName = packageName
+        val outFileName = "/data/data/$packageName/fiche_intervention_modif.pdf"
 
         val myOutput = FileOutputStream(outFileName)
         val myInput = this.assets.open("fiche_intervention_modif.pdf")

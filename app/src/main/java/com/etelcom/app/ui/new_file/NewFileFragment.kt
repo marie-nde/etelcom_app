@@ -1,4 +1,4 @@
-package com.example.etelcom.ui.new_file
+package com.etelcom.app.ui.new_file
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -9,8 +9,6 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.method.TextKeyListener.clear
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +16,12 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
-import com.example.etelcom.R
+import com.etelcom.app.R
 import com.itextpdf.forms.PdfAcroForm
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.PdfWriter
 import kotlinx.android.synthetic.main.fragment_new_file.*
-import org.slf4j.MDC.clear
 import java.io.File
 import java.sql.Time
 import java.text.DateFormat
@@ -122,7 +119,8 @@ class NewFileFragment : Fragment() {
                     val start = Time(endHour.toInt(), endMinute.toInt(), 0)
                     val diff: Time
 
-                    diff = difference(start, stop)
+                    diff =
+                        difference(start, stop)
                     val diffHours = String.format("%02d", diff.hours)
                     val diffMinutes = String.format("%02d", diff.minutes)
                     val durationTime: String = diffHours + "h" + diffMinutes
@@ -165,6 +163,11 @@ class NewFileFragment : Fragment() {
 
             // Load the data saved and fills a pdf
             loadData()
+
+            // Remove Shared preferences data
+            val pref: SharedPreferences.Editor = requireContext().getSharedPreferences("sharedPrefs", 0).edit()
+            pref.clear()
+            pref.commit()
 
             // Open folder from device
             val intent = Intent(Intent.ACTION_VIEW)
@@ -243,7 +246,8 @@ class NewFileFragment : Fragment() {
         val savedCheckBoxType2 = sharedPreferences.getBoolean("FACTURABLE", false)
 
         // Load empty pdf document
-        val src = "/data/data/com.example.etelcom/fiche_intervention_modif.pdf"
+        val packageName = requireActivity().packageName
+        val src = "/data/data/$packageName/fiche_intervention_modif.pdf"
         var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
         val dest = "$extStorageDirectory/Fiches/$savedClientName" + "_$savedRef.pdf"
 
