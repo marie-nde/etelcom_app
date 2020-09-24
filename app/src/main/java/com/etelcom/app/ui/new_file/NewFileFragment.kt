@@ -1,20 +1,24 @@
 package com.etelcom.app.ui.new_file
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.etelcom.app.R
 import com.itextpdf.forms.PdfAcroForm
@@ -156,7 +160,9 @@ class NewFileFragment : Fragment() {
 
             // Create a directory "Fiches" if it doesn't exist
             var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
-            val dir = File("$extStorageDirectory/Fiches/")
+            val len = extStorageDirectory.length - 34
+            val myDir = extStorageDirectory.substring(0, len)
+            val dir = File("$myDir/Fiches_Etelcom/")
             if (!dir.isDirectory) {
                 dir.mkdir()
             }
@@ -249,7 +255,9 @@ class NewFileFragment : Fragment() {
         val packageName = requireActivity().packageName
         val src = "/data/data/$packageName/fiche_intervention_modif.pdf"
         var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
-        val dest = "$extStorageDirectory/Fiches/$savedClientName" + "_$savedRef.pdf"
+        val len = extStorageDirectory.length - 34
+        val myDir = extStorageDirectory.substring(0, len)
+        val dest = "$myDir/Fiches_Etelcom/$savedClientName" + "_$savedRef.pdf"
 
         // Put the data into a pdf
         val pdfDoc = PdfDocument(PdfReader(src), PdfWriter(dest))
