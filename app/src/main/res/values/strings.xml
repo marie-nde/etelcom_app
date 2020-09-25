@@ -5,9 +5,56 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Paramètres</string>
 
+    // Titles in nav bar
     <string name="menu_home">Accueil</string>
-    <string name ="menu_new_file">Nouvelle fiche</string>
+    <string name="menu_new_file">Nouvelle fiche</string>
     <string name="menu_after_validation">Valider</string>
+
+    // Settings activity
+    <string name="settings_category_tech">Modifier la liste des techniciens</string>
+    <string name="title_add_tech">Ajouter un technicien</string>
+    <string name="title_remove_tech">Supprimer un technicien</string>
+    <string name="key_add_tech">addTech</string>
+    <string name="key_remove_tech">deleteTech</string>
+
+    // Home fragment
+    <string name="default_home_text">Bienvenue</string>
+
+    // New file fragment
+    <string name="button_begin_intervention">Commencer l'intervention</string>
+    <string name="button_end_intervention">Terminer l'intervention</string>
+    <string name="client_text">Client</string>
+    <string name="site_text">Site</string>
+    <string name="date_text">Date</string>
+    <string name="begin_intervention_text">Début d'intervention</string>
+    <string name="begin_intervention_hint">Heure de début</string>
+    <string name="end_intervention_text">Fin d'intervention</string>
+    <string name="end_intervention_hint">Heure de fin</string>
+    <string name="duration_intervention_text">Durée d'intervention</string>
+    <string name="duration_intervention_hint">Durée</string>
+    <string name="ref_text">Réf</string>
+    <string name="technician_text">Technicien</string>
+    <string name="object_intervention_text">Objet de l'intervention</string>
+    <string name="object_max_lines_text">(Max : 3 lignes)</string>
+    <string name="detail_intervention_text">Détail de l'intervention</string>
+    <string name="detail_max_lines_text">(Max : 15 lignes)</string>
+    <string name="intervention_title_text">Intervention</string>
+    <string name="intervention_cb1_text">Site</string>
+    <string name="intervention_cb2_text">Prise en main</string>
+    <string name="intervention_cb3_text">Atelier</string>
+    <string name="maintenance_title_text">Maintenance</string>
+    <string name="maintenance_cb1_text">PC</string>
+    <string name="maintenance_cb2_text">Serveur</string>
+    <string name="maintenance_cb3_text">Réseau</string>
+    <string name="maintenance_cb4_text">Téléphonie</string>
+    <string name="status_title_text">Statut</string>
+    <string name="status_cb1_text">Résolu</string>
+    <string name="status_cb2_text">En cours</string>
+    <string name="status_cb3_text">Devis</string>
+    <string name="type_title_text">Type</string>
+    <string name="type_cb1_text">Maintenance</string>
+    <string name="type_cb2_text">Facturable</string>
+    <string name="button_validate_text">Valider</string>
 
     <string-array name="technicians">
         <item>Sélectionner un technicien</item>
