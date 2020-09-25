@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:textColor="#01345C"
+        android:title="@string/settings_category_tech">
+        <EditTextPreference
+            android:key="@string/key_add_tech"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/title_add_tech" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/technicians"
+            android:entryValues="@array/technicians"
+            android:key="@string/key_remove_tech"
+            android:title="@string/title_remove_tech" />
+    </PreferenceCategory>
+</PreferenceScreen>
