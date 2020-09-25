@@ -55,8 +55,6 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         // Check if we have write permission
-
-        // Check if we have write permission
         val permission = ActivityCompat.checkSelfPermission(
             applicationContext,
             Manifest.permission.WRITE_EXTERNAL_STORAGE

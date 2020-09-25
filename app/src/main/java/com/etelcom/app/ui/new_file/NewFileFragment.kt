@@ -3,17 +3,15 @@ package com.etelcom.app.ui.new_file
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
@@ -85,9 +83,7 @@ class NewFileFragment : Fragment() {
                 OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     val dayWithLeadingZero = String.format("%02d", dayOfMonth)
                     val monthWithLeadingZero = String.format("%02d", monthOfYear + 1)
-                    editDate.setText(
-                        "$dayWithLeadingZero/$monthWithLeadingZero/$year"
-                    )
+                    editDate.text = "$dayWithLeadingZero/$monthWithLeadingZero/$year"
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.show()
@@ -163,7 +159,7 @@ class NewFileFragment : Fragment() {
             val myDir = extStorageDirectory.substring(0, len)
             val dir = File("$myDir/Fiches_Etelcom/")
             if (!dir.isDirectory) {
-                dir.mkdir()
+                dir.mkdirs()
             }
 
             // Load the data saved and fills a pdf
