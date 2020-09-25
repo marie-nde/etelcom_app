@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "324819921416",
+    "firebase_url": "https://etelcom-a677b.firebaseio.com",
+    "project_id": "etelcom-a677b",
+    "storage_bucket": "etelcom-a677b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324819921416:android:3a82460aeb5afb46e27fbd",
+        "android_client_info": {
+          "package_name": "com.etelcom.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324819921416-6utue0lh0mmaua1co8deb4ej6j0omjnq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.etelcom.app",
+            "certificate_hash": "69049e96e0ca3eec1201c75cc575aff643c58a83"
+          }
+        },
+        {
+          "client_id": "324819921416-j6epgbcgmq07hp3od3jqc7vqc9i4r264.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVMw2WHc88CAHtqG5bQvF5_Vp1_Ux322s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324819921416-j6epgbcgmq07hp3od3jqc7vqc9i4r264.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
