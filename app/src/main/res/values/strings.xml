@@ -55,6 +55,8 @@
     <string name="type_cb1_text">Maintenance</string>
     <string name="type_cb2_text">Facturable</string>
     <string name="button_validate_text">Valider</string>
+    <string name="button_sign_etelcom">Signer - Etelcom</string>
+    <string name="button_sign_client">Signer - Client</string>
 
     <string-array name="technicians">
         <item>Sélectionner un technicien</item>
