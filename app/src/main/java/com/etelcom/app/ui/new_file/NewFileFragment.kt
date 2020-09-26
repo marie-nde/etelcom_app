@@ -9,6 +9,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +19,17 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.etelcom.app.DrawView
 import com.etelcom.app.R
+import com.etelcom.app.Scribbler
 import com.itextpdf.forms.PdfAcroForm
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.PdfWriter
 import kotlinx.android.synthetic.main.fragment_new_file.*
+import kotlinx.coroutines.Dispatchers.Main
 import java.io.File
+import java.io.IOException
 import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -147,6 +153,13 @@ class NewFileFragment : Fragment() {
             }
         }
 
+        // Click on the Etelcom sign button
+        val signEtelcomBtn: Button = root.findViewById(R.id.signEtelcomBtn)
+        signEtelcomBtn.setOnClickListener {
+            val intent = Intent (activity, Scribbler::class.java)
+            activity?.startActivity(intent)
+        }
+
         // Click on the validation button
         val validateBtn: Button = root.findViewById(R.id.validateBtn)
         validateBtn.setOnClickListener {
@@ -157,10 +170,9 @@ class NewFileFragment : Fragment() {
             var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
             val len = extStorageDirectory.length - 34
             val myDir = extStorageDirectory.substring(0, len)
-            val dir = File("$myDir/Fiches_Etelcom/")
-            if (!dir.isDirectory) {
-                dir.mkdirs()
-            }
+            val dir = File("$myDir/Documents/Fiches_Etelcom/")
+            dir.mkdirs()
+
 
             // Load the data saved and fills a pdf
             val savedPdf = loadData()
@@ -172,10 +184,10 @@ class NewFileFragment : Fragment() {
 
             // Message to say where is the new pdf
             val duration = Toast.LENGTH_LONG
-            val toast = Toast.makeText(requireContext(), "Le fichier se trouve dans Fiches_Etelcom", duration)
+            val toast = Toast.makeText(requireContext(), "Le fichier se trouve dans $dir", duration)
             toast.show()
 
-            // Open folders from device
+            // Open the newly created pdf
             val intent = Intent(Intent.ACTION_VIEW)
             val file = File("$dir/$savedPdf")
             val fileUri =  FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", file)
@@ -260,7 +272,7 @@ class NewFileFragment : Fragment() {
         var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
         val len = extStorageDirectory.length - 34
         val myDir = extStorageDirectory.substring(0, len)
-        val dest = "$myDir/Fiches_Etelcom/$savedClientName" + "_$savedRef.pdf"
+        var dest = "$myDir/Documents/Fiches_Etelcom/$savedClientName" + "_$savedRef.pdf"
 
         // Put the data into a pdf
         val pdfDoc = PdfDocument(PdfReader(src), PdfWriter(dest))
