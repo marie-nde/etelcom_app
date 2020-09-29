@@ -156,7 +156,42 @@ class NewFileFragment : Fragment() {
         // Click on the Etelcom sign button
         val signEtelcomBtn: Button = root.findViewById(R.id.signEtelcomBtn)
         signEtelcomBtn.setOnClickListener {
+
+            // Create a "signatures" folder if it doesn't exist
+            val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
+            val len = extStorageDirectory.length - 34
+            val myDir = extStorageDirectory.substring(0, len)
+            val dir = File("$myDir/Documents/Signatures_Etelcom/")
+            dir.mkdirs()
             val intent = Intent (activity, Scribbler::class.java)
+            val b: Bundle = Bundle()
+            val ref: TextView = root.findViewById(R.id.ref)
+            val refContent = ref.text
+            b.putString("ref", "$refContent")
+            b.putString("who", "etelcom")
+            intent.putExtras(b)
+            activity?.startActivity(intent)
+        }
+
+        // Click on the client sign button
+        val signClientBtn: Button = root.findViewById(R.id.signClientBtn)
+        signClientBtn.setOnClickListener {
+
+            // Create a "signatures" folder if it doesn't exist
+            val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
+            val len = extStorageDirectory.length - 34
+            val myDir = extStorageDirectory.substring(0, len)
+            val dir = File("$myDir/Documents/Signatures_Etelcom/")
+            dir.mkdirs()
+            val intent = Intent (activity, Scribbler::class.java)
+            val b: Bundle = Bundle()
+            val ref: TextView = root.findViewById(R.id.ref)
+            val refContent = ref.text
+            val client: TextView = root.findViewById(R.id.clientName)
+            val clientContent = client.text
+            b.putString("ref", "$refContent")
+            b.putString("who", "$clientContent")
+            intent.putExtras(b)
             activity?.startActivity(intent)
         }
 
@@ -166,7 +201,7 @@ class NewFileFragment : Fragment() {
             // Save the data entered
             saveData()
 
-            // Create a directory "Fiches" if it doesn't exist
+            // Create a "Fiches" folder if it doesn't exist
             var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
             val len = extStorageDirectory.length - 34
             val myDir = extStorageDirectory.substring(0, len)

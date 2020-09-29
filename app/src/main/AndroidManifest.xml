@@ -36,7 +36,7 @@
                 android:value=".MainActivity"/>
         </activity>
         <activity android:name=".Scribbler"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
