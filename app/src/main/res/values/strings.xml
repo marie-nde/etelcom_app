@@ -40,11 +40,11 @@
     <string name="detail_max_lines_text">(Max : 15 lignes)</string>
     <string name="intervention_title_text">Intervention</string>
     <string name="intervention_cb1_text">Site</string>
-    <string name="intervention_cb2_text" translatable="false">Prise en main</string>
-    <string name="intervention_cb3_text" translatable="false">Atelier</string>
-    <string name="maintenance_title_text" translatable="false">Maintenance</string>
-    <string name="maintenance_cb1_text" translatable="false">PC</string>
-    <string name="maintenance_cb2_text" translatable="false">Serveur</string>
+    <string name="intervention_cb2_text">Prise en main</string>
+    <string name="intervention_cb3_text">Atelier</string>
+    <string name="maintenance_title_text">Maintenance</string>
+    <string name="maintenance_cb1_text">PC</string>
+    <string name="maintenance_cb2_text">Serveur</string>
     <string name="maintenance_cb3_text">Réseau</string>
     <string name="maintenance_cb4_text">Téléphonie</string>
     <string name="status_title_text">Statut</string>
