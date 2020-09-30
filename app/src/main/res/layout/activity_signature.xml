@@ -11,15 +11,18 @@
         android:id="@+id/validateSignBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
         android:text="@string/button_validate_text"
-        app:layout_constraintTop_toTopOf="@+id/drawView">
+        app:layout_constraintBottom_toTopOf="@+id/drawView">
 
     </Button>
 
     <com.etelcom.app.DrawView
         android:id="@+id/drawView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </com.etelcom.app.DrawView>
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/validateSignBtn"
+        android:layout_marginBottom="2dp"></com.etelcom.app.DrawView>
 
 </RelativeLayout>

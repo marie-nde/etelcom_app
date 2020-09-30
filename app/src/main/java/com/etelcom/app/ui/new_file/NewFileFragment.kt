@@ -3,14 +3,11 @@ package com.etelcom.app.ui.new_file
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,22 +16,22 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.etelcom.app.DrawView
 import com.etelcom.app.R
 import com.etelcom.app.Scribbler
 import com.itextpdf.forms.PdfAcroForm
+import com.itextpdf.io.image.ImageData
+import com.itextpdf.io.image.ImageDataFactory
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.PdfWriter
+import com.itextpdf.layout.Document
 import kotlinx.android.synthetic.main.fragment_new_file.*
-import kotlinx.coroutines.Dispatchers.Main
 import java.io.File
-import java.io.IOException
 import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-
+import com.itextpdf.layout.element.Image
 
 class NewFileFragment : Fragment() {
 
@@ -163,11 +160,9 @@ class NewFileFragment : Fragment() {
             val myDir = extStorageDirectory.substring(0, len)
             val dir = File("$myDir/Documents/Signatures_Etelcom/")
             dir.mkdirs()
+
             val intent = Intent (activity, Scribbler::class.java)
             val b: Bundle = Bundle()
-            val ref: TextView = root.findViewById(R.id.ref)
-            val refContent = ref.text
-            b.putString("ref", "$refContent")
             b.putString("who", "etelcom")
             intent.putExtras(b)
             activity?.startActivity(intent)
@@ -183,14 +178,10 @@ class NewFileFragment : Fragment() {
             val myDir = extStorageDirectory.substring(0, len)
             val dir = File("$myDir/Documents/Signatures_Etelcom/")
             dir.mkdirs()
+
             val intent = Intent (activity, Scribbler::class.java)
             val b: Bundle = Bundle()
-            val ref: TextView = root.findViewById(R.id.ref)
-            val refContent = ref.text
-            val client: TextView = root.findViewById(R.id.clientName)
-            val clientContent = client.text
-            b.putString("ref", "$refContent")
-            b.putString("who", "$clientContent")
+            b.putString("who", "client")
             intent.putExtras(b)
             activity?.startActivity(intent)
         }
@@ -208,8 +199,7 @@ class NewFileFragment : Fragment() {
             val dir = File("$myDir/Documents/Fiches_Etelcom/")
             dir.mkdirs()
 
-
-            // Load the data saved and fills a pdf
+            // Load the data saved and fill a pdf with the data entered
             val savedPdf = loadData()
 
             // Remove Shared preferences data
@@ -309,8 +299,21 @@ class NewFileFragment : Fragment() {
         val myDir = extStorageDirectory.substring(0, len)
         var dest = "$myDir/Documents/Fiches_Etelcom/$savedClientName" + "_$savedRef.pdf"
 
+        // Get the two signatures png
+        val signEtelcom: String = "$myDir/Documents/Signatures_Etelcom/etelcom.png"
+        val signClient: String = "$myDir/Documents/Signatures_Etelcom/client.png"
+        val dataEtelcom: ImageData = ImageDataFactory.create(signEtelcom)
+        val dataClient: ImageData = ImageDataFactory.create(signClient)
+        val imageEtelcom = Image(dataEtelcom)
+        val imageClient = Image(dataClient)
+        imageEtelcom.setWidth(110.0F)
+        imageEtelcom.setHeight(200.0F)
+
         // Put the data into a pdf
         val pdfDoc = PdfDocument(PdfReader(src), PdfWriter(dest))
+        val document = Document(pdfDoc)
+        imageEtelcom.setFixedPosition(100.0F, 100.0F)
+        document.add(imageEtelcom)
         val form: PdfAcroForm = PdfAcroForm.getAcroForm(pdfDoc, true)
         form.getField("client").setValue("$savedClientName")
         form.getField("site").setValue("$savedSiteName")
@@ -334,7 +337,7 @@ class NewFileFragment : Fragment() {
         if (savedCheckBoxStatus3) { form.getField("checkBoxStatus3").setValue("$savedCheckBoxStatus3") }
         if (savedCheckBoxType1) { form.getField("checkBoxType1").setValue("$savedCheckBoxType1") }
         if (savedCheckBoxType2) { form.getField("checkBoxType2").setValue("$savedCheckBoxType2") }
-        pdfDoc.close()
+        document.close()
         return ("$savedClientName" + "_$savedRef.pdf")
     }
 }

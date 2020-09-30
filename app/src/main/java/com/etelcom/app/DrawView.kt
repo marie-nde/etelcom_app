@@ -19,7 +19,7 @@ class DrawView(c: Context, attrSet: AttributeSet) : View(c) {
         super.onSizeChanged(w, h, oldw, oldh)
         mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         mCanvas = Canvas(mBitmap)
-        mCanvas.drawRect(0.0F, 180.0F, w.toFloat(), h.toFloat(), mPaint)
+        mCanvas.drawRect(0.0F, 0.0F, w.toFloat(), h.toFloat(), mPaint)
     }
 
     override fun onDraw(canvas: Canvas) {
