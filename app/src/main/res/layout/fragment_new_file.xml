@@ -27,9 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/status_cb2_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/checkBoxStatus3"
-        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toEndOf="@+id/checkBoxStatus1"
         app:layout_constraintTop_toTopOf="@+id/checkBoxStatus1" />
 
@@ -40,7 +40,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/status_cb3_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/checkBoxStatus2" />
 
@@ -51,7 +51,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="@string/status_cb1_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textStatus" />
 
@@ -306,17 +306,13 @@
 
     <EditText
         android:id="@+id/date"
-        android:layout_width="300dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:ems="10"
         android:hint="@string/date_text"
         android:inputType="date"
-        app:layout_constraintEnd_toStartOf="@+id/calBtn"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDate" />
 
@@ -324,8 +320,8 @@
         android:id="@+id/calBtn"
         android:layout_width="51dp"
         android:layout_height="46dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginLeft="7dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:contentDescription="TODO"
@@ -397,13 +393,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:ems="10"
         android:hint="@string/duration_intervention_hint"
         android:inputType="text"
-        app:layout_constraintEnd_toStartOf="@+id/durationAction"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textDuration" />
 
@@ -411,10 +403,10 @@
         android:id="@+id/durationAction"
         android:layout_width="51dp"
         android:layout_height="46dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         app:layout_constraintEnd_toStartOf="@+id/ref"
         app:layout_constraintStart_toEndOf="@+id/durationTime"
         app:layout_constraintTop_toTopOf="@+id/durationTime"
@@ -470,7 +462,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="@string/intervention_cb1_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInter" />
 
@@ -483,7 +475,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/intervention_cb2_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/checkBoxInter3"
         app:layout_constraintStart_toEndOf="@+id/checkBoxInter1"
         app:layout_constraintTop_toTopOf="@+id/checkBoxInter1" />
@@ -495,7 +487,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/intervention_cb3_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/checkBoxInter2" />
 
@@ -506,7 +498,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="@string/maintenance_cb1_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMaintenance" />
 
@@ -515,7 +507,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/maintenance_cb2_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/checkBoxMaint3"
         app:layout_constraintStart_toEndOf="@+id/checkBoxMaint1"
         app:layout_constraintTop_toTopOf="@+id/checkBoxMaint1" />
@@ -525,7 +517,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/maintenance_cb3_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/checkBoxMaint4"
         app:layout_constraintStart_toEndOf="@+id/checkBoxMaint2"
         app:layout_constraintTop_toTopOf="@+id/checkBoxMaint2" />
@@ -537,7 +529,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/maintenance_cb4_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/checkBoxMaint3" />
 
@@ -548,7 +540,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="@string/type_cb1_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textType" />
 
@@ -561,7 +553,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:text="@string/type_cb2_text"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/checkBoxType1"

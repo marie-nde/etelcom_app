@@ -36,7 +36,8 @@
                 android:value=".MainActivity"/>
         </activity>
         <activity android:name=".Scribbler"
-            android:theme="@style/AppTheme.Signature">
+            android:theme="@style/AppTheme.Signature"
+            android:screenOrientation="portrait">
         </activity>
         <provider
             android:name="androidx.core.content.FileProvider"

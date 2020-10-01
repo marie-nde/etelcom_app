@@ -4,6 +4,20 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/marie/Documents/keystores/android.jks')
+            storePassword 'etelcom'
+            keyAlias 'MyAndroidKey'
+            keyPassword 'etelcom'
+        }
+        debug {
+            storeFile file('/Users/marie/Documents/keystores/debug.jks')
+            storePassword 'etelcom'
+            keyAlias 'MyDefaultKey'
+            keyPassword 'etelcom'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
