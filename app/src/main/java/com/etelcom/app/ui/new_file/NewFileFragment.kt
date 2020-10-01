@@ -32,6 +32,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import com.itextpdf.layout.element.Image
+import kotlin.math.sign
 
 class NewFileFragment : Fragment() {
 
@@ -301,28 +302,35 @@ class NewFileFragment : Fragment() {
         val myDir = extStorageDirectory.substring(0, len)
         var dest = "$myDir/Documents/Fiches_Etelcom/$savedClientName" + "_$savedRef.pdf"
 
-        // Get the two signatures png
-        val signEtelcom: String = "$myDir/Documents/Signatures_Etelcom/etelcom.png"
-        val signClient: String = "$myDir/Documents/Signatures_Etelcom/client.png"
-        val dataEtelcom: ImageData = ImageDataFactory.create(signEtelcom)
-        val dataClient: ImageData = ImageDataFactory.create(signClient)
-        val imageEtelcom = Image(dataEtelcom)
-        val imageClient = Image(dataClient)
-        // Modifies the png to fit the pdf
-        imageEtelcom.setWidth(90.0F)
-        imageEtelcom.setHeight(152.0F)
-        imageEtelcom.setRotationAngle(Math.toRadians(90.0))
-        imageClient.setWidth(90.0F)
-        imageClient.setHeight(152.0F)
-        imageClient.setRotationAngle(Math.toRadians(90.0))
-
-        // Put the data into a pdf
         val pdfDoc = PdfDocument(PdfReader(src), PdfWriter(dest))
         val document = Document(pdfDoc)
-        imageEtelcom.setFixedPosition(100.0F, 68.0F)
-        imageClient.setFixedPosition(400.0F, 68.0F)
-        document.add(imageEtelcom)
-        document.add(imageClient)
+
+        // Get the two signatures png
+        val signEtelcom: String = "$myDir/Documents/Signatures_Etelcom/etelcom.png"
+        val fileEtelcom = File(signEtelcom)
+        val signClient: String = "$myDir/Documents/Signatures_Etelcom/client.png"
+        val fileClient = File(signClient)
+
+        if (fileEtelcom.exists()) {
+            val dataEtelcom: ImageData = ImageDataFactory.create(signEtelcom)
+            val imageEtelcom = Image(dataEtelcom)
+            imageEtelcom.setWidth(90.0F)
+            imageEtelcom.setHeight(152.0F)
+            imageEtelcom.setRotationAngle(Math.toRadians(90.0))
+            imageEtelcom.setFixedPosition(100.0F, 68.0F)
+            document.add(imageEtelcom)
+        }
+        if (fileClient.exists()) {
+            val dataClient: ImageData = ImageDataFactory.create(signClient)
+            val imageClient = Image(dataClient)
+            imageClient.setWidth(90.0F)
+            imageClient.setHeight(152.0F)
+            imageClient.setRotationAngle(Math.toRadians(90.0))
+            imageClient.setFixedPosition(400.0F, 68.0F)
+            document.add(imageClient)
+        }
+
+        // Put the data into a pdf
         val form: PdfAcroForm = PdfAcroForm.getAcroForm(pdfDoc, true)
         form.getField("client").setValue("$savedClientName")
         form.getField("site").setValue("$savedSiteName")
