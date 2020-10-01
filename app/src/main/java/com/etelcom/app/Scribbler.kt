@@ -34,8 +34,7 @@ class Scribbler : Activity() {
             } else 0
             val lengthButton: Int = validateBtn.height
             val lengthBottom: Int = lengthButton + lengthNavBar + 10
-            val lengthTop = 50
-            val b: Bitmap = getBitmapFromView(it.rootView, lengthBottom, lengthTop)
+            val b: Bitmap = getBitmapFromView(it.rootView, lengthBottom)
 
             val bun = intent.extras
             var who: String? = ""
@@ -56,12 +55,11 @@ class Scribbler : Activity() {
         }
     }
 
-    private fun getBitmapFromView(view: View, length: Int, appbar: Int): Bitmap {
+    private fun getBitmapFromView(view: View, length: Int): Bitmap {
         var bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         var bottomBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height - length)
         var canvas = Canvas(bottomBitmap)
         view.draw(canvas)
-        var resizedBitmap = Bitmap.createBitmap(bottomBitmap, 0, appbar, bottomBitmap.width, bottomBitmap.height - appbar)
-        return resizedBitmap
+        return bottomBitmap
     }
 }
