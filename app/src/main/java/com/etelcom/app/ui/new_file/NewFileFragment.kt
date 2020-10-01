@@ -237,6 +237,7 @@ class NewFileFragment : Fragment() {
         val detailIntervention: String = detailIntervention.text.toString()
         val tech: String = tech_spinner.selectedItem.toString();
 
+        // Save data in shared prefs
         val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.apply {
@@ -267,6 +268,7 @@ class NewFileFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun loadData(): String {
+        // Get saved data from shared prefs
         val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val savedClientName = sharedPreferences.getString("CLIENT", "")
         val savedSiteName = sharedPreferences.getString("SITE", "")
@@ -306,14 +308,21 @@ class NewFileFragment : Fragment() {
         val dataClient: ImageData = ImageDataFactory.create(signClient)
         val imageEtelcom = Image(dataEtelcom)
         val imageClient = Image(dataClient)
-        imageEtelcom.setWidth(110.0F)
-        imageEtelcom.setHeight(200.0F)
+        // Modifies the png to fit the pdf
+        imageEtelcom.setWidth(90.0F)
+        imageEtelcom.setHeight(152.0F)
+        imageEtelcom.setRotationAngle(Math.toRadians(90.0))
+        imageClient.setWidth(90.0F)
+        imageClient.setHeight(152.0F)
+        imageClient.setRotationAngle(Math.toRadians(90.0))
 
         // Put the data into a pdf
         val pdfDoc = PdfDocument(PdfReader(src), PdfWriter(dest))
         val document = Document(pdfDoc)
-        imageEtelcom.setFixedPosition(100.0F, 100.0F)
+        imageEtelcom.setFixedPosition(100.0F, 68.0F)
+        imageClient.setFixedPosition(400.0F, 68.0F)
         document.add(imageEtelcom)
+        document.add(imageClient)
         val form: PdfAcroForm = PdfAcroForm.getAcroForm(pdfDoc, true)
         form.getField("client").setValue("$savedClientName")
         form.getField("site").setValue("$savedSiteName")
