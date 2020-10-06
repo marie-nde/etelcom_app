@@ -1,7 +1,6 @@
 package com.etelcom.app.ui.new_file
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -29,14 +28,14 @@ import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.layout.Document
+import com.itextpdf.layout.element.Image
 import kotlinx.android.synthetic.main.fragment_new_file.*
 import java.io.File
 import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import com.itextpdf.layout.element.Image
-import kotlin.math.sign
+import kotlin.concurrent.thread
 
 class NewFileFragment : Fragment() {
     // Storage Permissions
@@ -44,9 +43,9 @@ class NewFileFragment : Fragment() {
     private val PERMISSIONS_STORAGE = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private var i = 0
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -163,8 +162,8 @@ class NewFileFragment : Fragment() {
         // Click on the Etelcom sign button
         val signEtelcomBtn: Button = root.findViewById(R.id.signEtelcomBtn)
         signEtelcomBtn.setOnClickListener {
-            // Create a "signatures" folder if it doesn't exist
             if (checkPermission(requireContext(), requireActivity(), PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE) == 1) {
+                // Create a "signatures" folder if it doesn't exist
                 val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
                 val len = extStorageDirectory.length - 34
                 val myDir = extStorageDirectory.substring(0, len)
@@ -184,9 +183,8 @@ class NewFileFragment : Fragment() {
         // Click on the client sign button
         val signClientBtn: Button = root.findViewById(R.id.signClientBtn)
         signClientBtn.setOnClickListener {
-
-            // Create a "signatures" folder if it doesn't exist
             if (checkPermission(requireContext(), requireActivity(), PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE) == 1) {
+                // Create a "signatures" folder if it doesn't exist
                 val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
                 val len = extStorageDirectory.length - 34
                 val myDir = extStorageDirectory.substring(0, len)
@@ -205,49 +203,58 @@ class NewFileFragment : Fragment() {
         val validateBtn: Button = root.findViewById(R.id.validateBtn)
         validateBtn.setOnClickListener {
             if (checkPermission(requireContext(), requireActivity(), PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE) == 1) {
+                val loadingBar: ProgressBar = root.findViewById(R.id.progressBar)
+                loadingBar.visibility = View.VISIBLE
 
-                // Save the data entered
-                saveData()
+                thread(false) {
+                    Thread.sleep(10)
+                    requireActivity().runOnUiThread { // This code will always run on the UI thread, therefore is safe to modify UI elements.
+                        // Save the data entered
+                        saveData()
 
-                // Create a "Fiches" folder if it doesn't exist
-                var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
-                val len = extStorageDirectory.length - 34
-                val myDir = extStorageDirectory.substring(0, len)
-                val dir = File("$myDir/Documents/Fiches_Etelcom/")
-                if (!dir.exists()) {
-                    dir.mkdirs()
-                }
+                        // Create a "Fiches" folder if it doesn't exist
+                        var extStorageDirectory =
+                            requireActivity().getExternalFilesDir(null).toString()
+                        val len = extStorageDirectory.length - 34
+                        val myDir = extStorageDirectory.substring(0, len)
+                        val dir = File("$myDir/Documents/Fiches_Etelcom/")
+                        if (!dir.exists()) {
+                            dir.mkdirs()
+                        }
 
-                // Load the data saved and fill a pdf with the data entered
-                val savedPdf = loadData()
+                        // Load the data saved and fill a pdf with the data entered
+                        val savedPdf = loadData()
 
-                // Remove Shared preferences data
-                val pref: SharedPreferences.Editor =
-                    requireContext().getSharedPreferences("sharedPrefs", 0).edit()
-                pref.clear()
-                pref.commit()
+                        // Remove Shared preferences data
+                        val pref: SharedPreferences.Editor =
+                            requireContext().getSharedPreferences("sharedPrefs", 0).edit()
+                        pref.clear()
+                        pref.commit()
 
-                // Message to say where is the new pdf
-                val duration = Toast.LENGTH_LONG
-                val toast = Toast.makeText(
-                    requireContext(),
-                    "Le pdf se trouve dans Documents/Fiches_Etelcom",
-                    duration
-                )
-                toast.show()
+                        // Message to say where is the new pdf
+                        val duration = Toast.LENGTH_LONG
+                        val toast = Toast.makeText(
+                            requireContext(),
+                            "Le pdf se trouve dans Documents/Fiches_Etelcom",
+                            duration
+                        )
+                        toast.show()
 
-                // Open the newly created pdf
-                val intent = Intent(Intent.ACTION_VIEW)
-                val file = File("$dir/$savedPdf")
-                val fileUri = FileProvider.getUriForFile(
-                    requireContext(),
-                    requireContext().applicationContext.packageName + ".provider",
-                    file
-                )
-                intent.setDataAndType(fileUri, "application/pdf")
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                startActivity(intent)
+                        // Open the newly created pdf
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        val file = File("$dir/$savedPdf")
+                        val fileUri = FileProvider.getUriForFile(
+                            requireContext(),
+                            requireContext().applicationContext.packageName + ".provider",
+                            file
+                        )
+                        loadingBar.visibility = View.INVISIBLE
+                        intent.setDataAndType(fileUri, "application/pdf")
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        startActivity(intent)
+                    }
+                }.start()
             }
         }
 
@@ -387,7 +394,7 @@ class NewFileFragment : Fragment() {
     }
 }
 
-    fun difference(start: Time, stop: Time): Time {
+fun difference(start: Time, stop: Time): Time {
     val diff = Time(0, 0, 0)
 
     if (stop.seconds > start.seconds) {
