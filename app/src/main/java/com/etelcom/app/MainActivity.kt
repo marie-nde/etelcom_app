@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             applicationContext,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
-
         if (permission != PackageManager.PERMISSION_GRANTED) {
                 // We don't have permission so prompt the user
                 ActivityCompat.requestPermissions(

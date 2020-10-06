@@ -29,7 +29,7 @@
         android:text="@string/status_cb2_text"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/checkBoxStatus3"
-        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toEndOf="@+id/checkBoxStatus1"
         app:layout_constraintTop_toTopOf="@+id/checkBoxStatus1" />
 

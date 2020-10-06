@@ -1,11 +1,14 @@
 package com.etelcom.app.ui.new_file
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.etelcom.app.R
@@ -35,6 +39,11 @@ import com.itextpdf.layout.element.Image
 import kotlin.math.sign
 
 class NewFileFragment : Fragment() {
+    // Storage Permissions
+    private val REQUEST_EXTERNAL_STORAGE = 1
+    private val PERMISSIONS_STORAGE = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
@@ -45,7 +54,7 @@ class NewFileFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_new_file, container, false)
 
-        // Display the current time in "beginning of the intervention"
+        // On click display the current time in "beginning of the intervention"
         val interventionBtnBeg: Button = root.findViewById(R.id.interventionBtnBeg)
         val beginHour: TextView = root.findViewById(R.id.beginHour)
         interventionBtnBeg.setOnClickListener {
@@ -56,7 +65,7 @@ class NewFileFragment : Fragment() {
             beginHour.text = "$hourFormat"
         }
 
-        // Display the current time in "end of the intervention"
+        // On click display the current time in "end of the intervention"
         val interventionBtnEnd: Button = root.findViewById(R.id.interventionBtnEnd)
         val endHour: TextView = root.findViewById(R.id.endHour)
         interventionBtnEnd.setOnClickListener {
@@ -93,7 +102,7 @@ class NewFileFragment : Fragment() {
             datePickerDialog.show()
         }
 
-        // Fill duration time
+        // On click fill duration time
         val durationAction: AppCompatImageButton = root.findViewById(R.id.durationAction)
         durationAction.setOnClickListener {
             val editBegin: TextView = root.findViewById(R.id.beginHour)
@@ -154,19 +163,22 @@ class NewFileFragment : Fragment() {
         // Click on the Etelcom sign button
         val signEtelcomBtn: Button = root.findViewById(R.id.signEtelcomBtn)
         signEtelcomBtn.setOnClickListener {
-
             // Create a "signatures" folder if it doesn't exist
-            val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
-            val len = extStorageDirectory.length - 34
-            val myDir = extStorageDirectory.substring(0, len)
-            val dir = File("$myDir/Documents/Signatures_Etelcom/")
-            dir.mkdirs()
+            if (checkPermission(requireContext(), requireActivity(), PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE) == 1) {
+                val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
+                val len = extStorageDirectory.length - 34
+                val myDir = extStorageDirectory.substring(0, len)
+                val dir = File("$myDir/Documents/Signatures_Etelcom/")
+                if (!dir.exists()) {
+                    dir.mkdirs()
+                }
 
-            val intent = Intent (activity, Scribbler::class.java)
-            val b: Bundle = Bundle()
-            b.putString("who", "etelcom")
-            intent.putExtras(b)
-            activity?.startActivity(intent)
+                val intent = Intent(activity, Scribbler::class.java)
+                val b: Bundle = Bundle()
+                b.putString("who", "etelcom")
+                intent.putExtras(b)
+                activity?.startActivity(intent)
+            }
         }
 
         // Click on the client sign button
@@ -174,53 +186,69 @@ class NewFileFragment : Fragment() {
         signClientBtn.setOnClickListener {
 
             // Create a "signatures" folder if it doesn't exist
-            val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
-            val len = extStorageDirectory.length - 34
-            val myDir = extStorageDirectory.substring(0, len)
-            val dir = File("$myDir/Documents/Signatures_Etelcom/")
-            dir.mkdirs()
+            if (checkPermission(requireContext(), requireActivity(), PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE) == 1) {
+                val extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
+                val len = extStorageDirectory.length - 34
+                val myDir = extStorageDirectory.substring(0, len)
+                val dir = File("$myDir/Documents/Signatures_Etelcom/")
+                dir.mkdirs()
 
-            val intent = Intent (activity, Scribbler::class.java)
-            val b: Bundle = Bundle()
-            b.putString("who", "client")
-            intent.putExtras(b)
-            activity?.startActivity(intent)
+                val intent = Intent(activity, Scribbler::class.java)
+                val b: Bundle = Bundle()
+                b.putString("who", "client")
+                intent.putExtras(b)
+                activity?.startActivity(intent)
+            }
         }
 
         // Click on the validation button
         val validateBtn: Button = root.findViewById(R.id.validateBtn)
         validateBtn.setOnClickListener {
-            // Save the data entered
-            saveData()
+            if (checkPermission(requireContext(), requireActivity(), PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE) == 1) {
 
-            // Create a "Fiches" folder if it doesn't exist
-            var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
-            val len = extStorageDirectory.length - 34
-            val myDir = extStorageDirectory.substring(0, len)
-            val dir = File("$myDir/Documents/Fiches_Etelcom/")
-            dir.mkdirs()
+                // Save the data entered
+                saveData()
 
-            // Load the data saved and fill a pdf with the data entered
-            val savedPdf = loadData()
+                // Create a "Fiches" folder if it doesn't exist
+                var extStorageDirectory = requireActivity().getExternalFilesDir(null).toString()
+                val len = extStorageDirectory.length - 34
+                val myDir = extStorageDirectory.substring(0, len)
+                val dir = File("$myDir/Documents/Fiches_Etelcom/")
+                if (!dir.exists()) {
+                    dir.mkdirs()
+                }
 
-            // Remove Shared preferences data
-            val pref: SharedPreferences.Editor = requireContext().getSharedPreferences("sharedPrefs", 0).edit()
-            pref.clear()
-            pref.commit()
+                // Load the data saved and fill a pdf with the data entered
+                val savedPdf = loadData()
 
-            // Message to say where is the new pdf
-            val duration = Toast.LENGTH_LONG
-            val toast = Toast.makeText(requireContext(), "Le fichier se trouve dans $dir", duration)
-            toast.show()
+                // Remove Shared preferences data
+                val pref: SharedPreferences.Editor =
+                    requireContext().getSharedPreferences("sharedPrefs", 0).edit()
+                pref.clear()
+                pref.commit()
 
-            // Open the newly created pdf
-            val intent = Intent(Intent.ACTION_VIEW)
-            val file = File("$dir/$savedPdf")
-            val fileUri =  FileProvider.getUriForFile(requireContext(), requireContext().applicationContext.packageName + ".provider", file)
-            intent.setDataAndType(fileUri, "application/pdf")
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            startActivity(intent)
+                // Message to say where is the new pdf
+                val duration = Toast.LENGTH_LONG
+                val toast = Toast.makeText(
+                    requireContext(),
+                    "Le pdf se trouve dans Documents/Fiches_Etelcom",
+                    duration
+                )
+                toast.show()
+
+                // Open the newly created pdf
+                val intent = Intent(Intent.ACTION_VIEW)
+                val file = File("$dir/$savedPdf")
+                val fileUri = FileProvider.getUriForFile(
+                    requireContext(),
+                    requireContext().applicationContext.packageName + ".provider",
+                    file
+                )
+                intent.setDataAndType(fileUri, "application/pdf")
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                startActivity(intent)
+            }
         }
 
         return root
@@ -359,7 +387,7 @@ class NewFileFragment : Fragment() {
     }
 }
 
-fun difference(start: Time, stop: Time): Time {
+    fun difference(start: Time, stop: Time): Time {
     val diff = Time(0, 0, 0)
 
     if (stop.seconds > start.seconds) {
@@ -377,4 +405,22 @@ fun difference(start: Time, stop: Time): Time {
     diff.hours = start.hours - stop.hours
 
     return diff
+}
+
+private fun checkPermission(c: Context, a: Activity, perm: Array<String>, request: Int): Int {
+    // Check if we have write permission
+    val permission = ActivityCompat.checkSelfPermission(
+        c,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    if (permission == PackageManager.PERMISSION_GRANTED) return 1
+    if (permission != PackageManager.PERMISSION_GRANTED) {
+        // We don't have permission so prompt the user
+        ActivityCompat.requestPermissions(
+            a,
+            perm,
+            request
+        )
+    }
+    return 0
 }
